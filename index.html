@@ -46,19 +46,25 @@
     >
       <a-marker id="combo-marker" type="pattern" url="pattern-descarga.patt">
         <a-entity
-          gltf-model="models/burger.glb"
-          scale="0.1 0.1 0.1"
+          gltf-model="models/burger_lowpoly.glb"
+          scale="0.5 0.5 0.5"
           position="0 0.5 0"
           rotation="0 45 0"
         ></a-entity>
 
         <a-entity
-          text="align: center; value: ¡Tu Combo Aquí!; color: black; width: 2; height: 0.5;"
+          text="align: center; value: ¡Tu Combo Aquí!; color: white; width: 2; height: 0.5"
           position="0 -0.2 0"
         ></a-entity>
       </a-marker>
-
-      <a-entity camera></a-entity>
+      <a-entity
+        camera="active: true"
+        look-controls
+        wasd-controls
+        position="0 1.6 0"
+        data-aframe-default-camera
+      ></a-entity>
+      <!-- <a-entity camera></a-entity> -->
     </a-scene>
   </body>
 </html>
