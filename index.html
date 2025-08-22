@@ -5,66 +5,62 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-
-    <title>Web AR Combo de Comida</title>
-
+    <title>Web AR Combo de Comida - Video</title>
     <style>
-      /* Elimina el margen por defecto del body para que ocupe toda la pantalla. */
       body {
         margin: 0px;
         overflow: hidden;
       }
-
-      /* Estilos para el div que actúa como pantalla de carga. */
-      .arjs-loader {
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.4);
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 1.2em;
-      }
     </style>
   </head>
-
   <body>
-    <div class="arjs-loader">Cargando contenido AR...</div>
+    <a-assets>
+      <video
+        id="my-video"
+        src="models/combo_video.mp4"
+        loop
+        playsinline
+        muted
+      ></video>
+    </a-assets>
 
-    <a-scene
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix;"
-    >
-      <a-marker id="combo-marker" type="pattern" url="pattern-descarga.patt">
-        <a-entity
-          gltf-model="models/burger_lowpoly.glb"
-          scale="0.5 0.5 0.5"
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+      <a-marker
+        id="combo-marker"
+        type="pattern"
+        url="pattern-combo.patt"
+        emitevents="true"
+      >
+        <a-video
+          id="video-entity"
+          src="#my-video"
+          width="1.5"
+          height="1.5"
           position="0 0.5 0"
-          rotation="0 45 0"
-        ></a-entity>
-
+          rotation="-90 0 0"
+        ></a-video>
         <a-entity
-          text="align: center; value: ¡Tu Combo Aquí!; color: white; width: 2; height: 0.5"
+          text="align: center; value: ¡Tu Combo Aquí!; color: black; width: 2; height: 0.5;"
           position="0 -0.2 0"
         ></a-entity>
       </a-marker>
-      <a-entity
-        camera="active: true"
-        look-controls
-        wasd-controls
-        position="0 1.6 0"
-        data-aframe-default-camera
-      ></a-entity>
-      <!-- <a-entity camera></a-entity> -->
+
+      <a-entity camera></a-entity>
     </a-scene>
+
+    <script>
+      const arMarker = document.getElementById("combo-marker");
+      const videoElement = document.getElementById("my-video");
+
+      arMarker.addEventListener("markerFound", function () {
+        videoElement.play();
+      });
+
+      arMarker.addEventListener("markerLost", function () {
+        videoElement.pause();
+      });
+    </script>
   </body>
 </html>
