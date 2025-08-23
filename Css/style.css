@@ -1,3 +1,4 @@
+/* Estilos generales */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -6,7 +7,7 @@ body {
     text-align: center;
 }
 
-/* Estilos de la pantalla de inicio */
+/* Contenedor de la pantalla de inicio */
 #start-screen {
     position: fixed;
     top: 0;
@@ -17,7 +18,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
 .intro-box {
@@ -44,18 +45,17 @@ body {
     background-color: #45a049;
 }
 
-/* Estilos del contenedor de la escena de AR */
+/* Contenedor de la escena de AR */
 #ar-container {
     width: 100vw;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-    /* Esto lo hace visible cuando se cambia el 'display' */
-    display: none; 
+    z-index: 1;
 }
 
-/* Estilos del overlay de instrucciones */
+/* Overlay de las instrucciones */
 #ui-overlay {
     position: fixed;
     top: 0;
@@ -95,8 +95,8 @@ p {
     margin-top: 15px;
 }
 
-/* Estilos para que la escena de A-Frame siempre sea completa */
-a-scene {
+/* Asegura que la escena de A-Frame sea siempre de pantalla completa dentro de su contenedor */
+#ar-scene {
     width: 100% !important;
     height: 100% !important;
     position: absolute !important;
