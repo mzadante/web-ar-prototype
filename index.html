@@ -1,66 +1,61 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<html lang="es">
+<head>
+    <title>Menú RA - Restaurante Ejemplo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <title>Web AR Combo de Comida - Video</title>
-    <style>
-      body {
-        margin: 0px;
-        overflow: hidden;
-      }
-    </style>
-  </head>
-  <body>
-    <a-assets>
-      <video
-        id="my-video"
-        src="models/combo_video.mp4"
-        loop
-        playsinline
-        muted
-      ></video>
-    </a-assets>
+</head>
+<body style="margin: 0; overflow: hidden;">
 
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-      <a-marker
-        id="combo-marker"
-        type="pattern"
-        url="pattern-combo.patt"
-        emitevents="true"
-      >
-        <a-video
-          id="video-entity"
-          src="#my-video"
-          width="1.5"
-          height="1.5"
-          position="0 0.5 0"
-          rotation="-90 0 0"
-        ></a-video>
-        <a-entity
-          text="align: center; value: ¡Tu Combo Aquí!; color: black; width: 2; height: 0.5;"
-          position="0 -0.2 0"
-        ></a-entity>
-      </a-marker>
+    <div id="start-screen">
+        <div class="intro-box">
+            <h1>Menú en Realidad Aumentada</h1>
+            <p>¿Listo para ver tu comida? Pulsa el botón para empezar.</p>
+            <button id="start-ar-button">Iniciar Realidad Aumentada</button>
+        </div>
+    </div>
 
-      <a-entity camera></a-entity>
-    </a-scene>
+    <div id="ar-container">
+        <div id="ui-overlay">
+            <div id="instructions">
+                <h1>Menú en Realidad Aumentada</h1>
+                <p>Apunte la cámara de su móvil al marcador sobre la mesa.</p>
+                <p id="status-message">Iniciando cámara...</p>
+            </div>
+        </div>
+        
+        <a-scene
+            id="ar-scene"
+            vr-mode-ui="enabled: false;"
+            renderer="logarithmicDepthBuffer: true;"
+            embedded
+            arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        >
+            <a-marker type="pattern" url="marcador.patt">
+                <a-video
+                    src="#video-comida"
+                    width="1.6"
+                    height="0.9"
+                    position="0 0 0"
+                    rotation="-90 0 0"
+                    scale="1 1 1"
+                    loop="true"
+                    autoplay="true"
+                    playsinline="true"
+                ></a-video>
+            </a-marker>
+    
+            <a-assets>
+                <video id="video-comida" src="comida.mp4" loop="true" playsinline="true" muted="true"></video>
+            </a-assets>
+    
+            <a-entity camera></a-entity>
+        </a-scene>
+    </div>
 
-    <script>
-      const arMarker = document.getElementById("combo-marker");
-      const videoElement = document.getElementById("my-video");
-
-      arMarker.addEventListener("markerFound", function () {
-        videoElement.play();
-      });
-
-      arMarker.addEventListener("markerLost", function () {
-        videoElement.pause();
-      });
-    </script>
-  </body>
+    <script src="app.js"></script>
+</body>
 </html>
