@@ -5,23 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('ui-overlay');
     const statusMessage = document.getElementById('status-message');
 
-    // Oculta el overlay de la interfaz de usuario al inicio
+    // Referencias a los marcadores y entidades
+    const videoMarker = document.getElementById('video-marker');
+    const modelMarker = document.getElementById('model-marker');
+    const videoEntity = document.getElementById('video-entidad');
+    const modelEntity = document.getElementById('modelo-entidad');
+
+    // Oculta las entidades al inicio
+    videoEntity.setAttribute('visible', 'false');
+    modelEntity.setAttribute('visible', 'false');
     overlay.style.opacity = '0';
     overlay.style.pointerEvents = 'none';
 
     // Maneja el clic en el botón de "Iniciar"
     startButton.addEventListener('click', () => {
-        // Oculta la pantalla de inicio
         startScreen.style.display = 'none';
-        
-        // Muestra la escena de AR.js
         arScene.style.display = 'block';
-
-        // Muestra el overlay de la interfaz de usuario con las instrucciones
         overlay.style.opacity = '1';
         overlay.style.pointerEvents = 'auto';
 
-        // Inicia la escena de AR.js si no estaba en ejecución
         if (arScene.is('paused')) {
             arScene.play();
         }
@@ -29,20 +31,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Escucha el evento de inicio de la cámara de AR.js
     arScene.addEventListener('camera-init', () => {
-        statusMessage.textContent = 'Cámara lista, apunte al marcador...';
+        statusMessage.textContent = 'Cámara lista, apunte a un marcador...';
     });
 
-    // Escucha cuando se encuentra el marcador
-    arScene.addEventListener('markerFound', () => {
-        // Oculta el overlay de instrucciones una vez que el marcador ha sido encontrado
+    // Lógica para el marcador del VIDEO
+    videoMarker.addEventListener('markerFound', () => {
         overlay.style.opacity = '0';
         overlay.style.pointerEvents = 'none';
+        videoEntity.setAttribute('visible', 'true');
+        modelEntity.setAttribute('visible', 'false');
+        // Aseguramos que el video se reproduzca
+        const video = document.querySelector('#video-comida');
+        video.play();
     });
     
-    // Escucha cuando se pierde el marcador
-    arScene.addEventListener('markerLost', () => {
-        // Muestra el overlay de instrucciones nuevamente
+    videoMarker.addEventListener('markerLost', () => {
         overlay.style.opacity = '1';
         overlay.style.pointerEvents = 'auto';
+        videoEntity.setAttribute('visible', 'false');
+        // Pausamos el video para que no siga sonando
+        const video = document.querySelector('#video-comida');
+        video.pause();
+    });
+
+    // Lógica para el marcador del MODELO 3D
+    modelMarker.addEventListener('markerFound', () => {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        videoEntity.setAttribute('visible', 'false');
+        modelEntity.setAttribute('visible', 'true');
+    });
+
+    modelMarker.addEventListener('markerLost', () => {
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+        modelEntity.setAttribute('visible', 'false');
     });
 });

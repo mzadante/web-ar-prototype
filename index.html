@@ -1,63 +1,89 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+  <head>
     <title>Menú RA - Restaurante Ejemplo</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href="/Css/style.css">
-    
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="/Css/style.css" />
+
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-</head>
-<body style="margin: 0; overflow: hidden;">
-
+  </head>
+  <body style="margin: 0; overflow: hidden">
     <div id="start-screen">
-        <div class="intro-box">
-            <h1>Menú en Realidad Aumentada</h1>
-            <p>¿Listo para ver tu comida? Pulsa el botón para empezar.</p>
-            <button id="start-ar-button">Iniciar Realidad Aumentada</button>
-        </div>
+      <div class="intro-box">
+        <h1>Menú en Realidad Aumentada</h1>
+        <p>¿Listo para ver tu comida? Pulsa el botón para empezar.</p>
+        <button id="start-ar-button">Iniciar Realidad Aumentada</button>
+      </div>
     </div>
 
     <div id="ar-container">
-        <div id="ui-overlay">
-            <div id="instructions">
-                <h1>Menú en Realidad Aumentada</h1>
-                <p>Apunte la cámara de su móvil al marcador sobre la mesa.</p>
-                <p id="status-message">Iniciando cámara...</p>
-            </div>
+      <div id="ui-overlay">
+        <div id="instructions">
+          <h1>Menú en Realidad Aumentada</h1>
+          <p>
+            Apunte la cámara de su móvil a uno de los marcadores sobre la mesa.
+          </p>
+          <p id="status-message">Iniciando cámara...</p>
         </div>
-        
-        <a-scene
-            id="ar-scene"
-            style="display: none;"
-            vr-mode-ui="enabled: false;"
-            renderer="logarithmicDepthBuffer: true;"
-            embedded
-            arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;"
-        >
-            <a-marker type="pattern" url="marcador.patt">
-                <a-video
-                    src="#video-comida"
-                    width="1.6"
-                    height="0.9"
-                    position="0 0 0"
-                    rotation="-90 0 0"
-                    scale="1 1 1"
-                    loop="true"
-                    autoplay="true"
-                    playsinline="true"
-                ></a-video>
-            </a-marker>
-    
-            <a-assets>
-                <video id="video-comida" src="/models/comida.mp4" loop playsinline muted preload="auto" crossorigin="anonymous"></video>
-            </a-assets>
-    
-            <a-entity camera></a-entity>
-        </a-scene>
+      </div>
+
+      <a-scene
+        id="ar-scene"
+        style="display: none"
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+        embedded
+        arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3; debugUIEnabled: false;"
+      >
+        <a-assets>
+          <video
+            id="video-comida"
+            src="/models/comida.mp4"
+            loop
+            playsinline
+            muted
+            preload="auto"
+            crossorigin="anonymous"
+          ></video>
+          <a-asset-item
+            id="modelo-comida"
+            src="/models/burger_lowpoly.glb"
+          ></a-asset-item>
+        </a-assets>
+
+        <a-marker id="video-marker" preset="hiro">
+    <a-video
+        id="video-entidad"
+        src="#video-comida"
+        width="1.6"
+        height="0.9"
+        position="0 0 0"
+        rotation="-90 0 0"
+        scale="1 1 1"
+        loop="true"
+        autoplay="true"
+        playsinline="true"
+    ></a-video>
+</a-marker>
+
+<a-marker id="model-marker" preset="hiro">
+    <a-entity
+        id="modelo-entidad"
+        gltf-model="#modelo-comida"
+        scale="0.5 0.5 0.5"
+        position="0 0 0"
+        rotation="-90 0 0"
+    ></a-entity>
+</a-marker>
+        <a-entity camera></a-entity>
+      </a-scene>
     </div>
 
     <script src="/js/app.js"></script>
-</body>
+  </body>
 </html>

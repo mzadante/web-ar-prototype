@@ -104,6 +104,7 @@ p {
     left: 0 !important;
 }
 
+
 /* Media Queries para responsividad */
 @media (max-width: 600px) {
     #instructions {
